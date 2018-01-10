@@ -1,0 +1,76 @@
+9.1:
+  木とは一つの根の下に、いくつかの部分木がぶら下がりっており、
+  また、それぞれの部分木にも、同じようにいくつかの（部分木の）部分木がぶら下がるという関係のことである。
+  この説明において「それぞれの部分木にも、同じようにいくつかの（部分木の）部分木がぶら下がる」という部分は
+  題意に置ける、Gは連結しており部分にあたる。
+  また、木の頂点は、部分木を持たない辺の先端に付いている外節点、及び部分木を持つ辺の内節点である。
+  各辺において、各辺の頂点を、外節点を持つ場合は外節点、外節点を持たない場合は部分木の視点であるとすると、
+  頂点の数は各辺に一つと、一番上の始点となる。
+  よって |V| = |E| + 1 の関係が成り立つ
+
+9.2:
+  cbt93.dat:
+    N 0 15
+    N 1 8
+    N 2 21
+    N 3 2
+    N 4 13
+    N 5 18
+    N 6 27
+    N 7 12
+    N 8 14
+    N 9 23
+    N 10 31
+    L 0 1
+    R 0 2
+    L 1 3
+    R 1 4
+    L 2 5
+    R 2 6
+    L 4 7
+    R 4 8
+    L 6 9
+    R 6 10
+
+9.3:
+  1. ./direct < cbt93.dat を実行した結果:
+    yutanoMacBook-Pro:class_09 yuta$ ./direct < cbt93.dat
+    node: 0 left: 1 right: 2 data: 15
+    node: 1 left: 3 right: 4 data: 8
+    node: 2 left: 5 right: 6 data: 21
+    node: 3 left: null right: null data: 2
+    node: 4 left: 7 right: 8 data: 13
+    node: 5 left: null right: null data: 18
+    node: 6 left: 9 right: 10 data: 27
+    node: 7 left: null right: null data: 12
+    node: 8 left: null right: null data: 14
+    node: 9 left: null right: null data: 23
+    node: 10 left: null right: null data: 31
+
+  2. ./dfscan < cbt93.dat を実行した結果:
+    yutanoMacBook-Pro:class_09 yuta$ ./dfscan < cbt93.dat
+    node: 0 left: 1 right: 2 data: 15
+    node: 1 left: 3 right: 4 data: 8
+    node: 3 left: null right: null data: 2
+    node: 4 left: 7 right: 8 data: 13
+    node: 7 left: null right: null data: 12
+    node: 8 left: null right: null data: 14
+    node: 2 left: 5 right: 6 data: 21
+    node: 5 left: null right: null data: 18
+    node: 6 left: 9 right: 10 data: 27
+    node: 9 left: null right: null data: 23
+    node: 10 left: null right: null data: 31
+
+  3. ./wfscan < cbt93.dat を実行した結果:
+    yutanoMacBook-Pro:class_09 yuta$ ./wfscan < cbt93.dat
+    node: 0 left: 1 right: 2 data: 15
+    node: 1 left: 3 right: 4 data: 8
+    node: 2 left: 5 right: 6 data: 21
+    node: 3 left: null right: null data: 2
+    node: 4 left: 7 right: 8 data: 13
+    node: 5 left: null right: null data: 18
+    node: 6 left: 9 right: 10 data: 27
+    node: 7 left: null right: null data: 12
+    node: 8 left: null right: null data: 14
+    node: 9 left: null right: null data: 23
+    node: 10 left: null right: null data: 31

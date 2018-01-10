@@ -1,0 +1,198 @@
+学籍番号: 1610396
+氏名: 高場雄太
+
+課題1
+code
+#include <stdio.h>
+#include <stdlib.h>
+
+// ノードを表す構造体
+typedef struct _Node {
+  int data;
+  struct _Node *next;
+} Node;
+
+Node *gen_node(void);
+
+/*-- 要素数nの配列aからkeyと一致する要素を線形探索 ---*/
+int search( const Node *p, int key, int n )
+{
+  int i = 0;
+  int result = 0;
+
+  while( i <= n ){
+    if( p->data == key){ // keyと一致するノードがある場合
+      result = 1;
+      printf("%dは%d番目にあります\n", key, i+1);
+    }
+    p=p->next; // 次のノードへ
+    i++;
+  }
+  return result;
+}
+
+int main(void)
+{
+  int ky, count, result;
+  FILE *fp;
+  Node *p,*head, *tail;
+
+  // 逆順リストの作成
+    count = 0;
+    fp = fopen("rand10000.csv", "r");
+    head=gen_node();
+    fscanf(fp,"%d",&(head->data));
+    tail=head;
+    while(p=gen_node(),fscanf(fp,"%d",&(p->data))!=EOF){
+      tail->next=p;
+      tail=p;
+      count++;
+    }
+    tail->next=NULL;
+    fclose( fp );
+
+  printf("探す値を入力して下さい:");
+  scanf("%d", &ky);
+
+  result = search(head, ky, count);
+
+  if( result == 0 )
+    printf("探索に失敗しました\n");
+
+  return 0;
+}
+
+Node *gen_node(void)
+{
+  return (Node *)malloc(sizeof(Node));
+}
+
+実行結果
+yutanoMacBook-Pro:class_06 yuta$ ./test01
+探す値を入力して下さい:33
+33は626番目にあります
+33は705番目にあります
+33は2076番目にあります
+33は3374番目にあります
+33は3712番目にあります
+33は4214番目にあります
+33は4424番目にあります
+33は4567番目にあります
+33は5374番目にあります
+33は5731番目にあります
+33は6240番目にあります
+33は6283番目にあります
+33は6977番目にあります
+33は8685番目にあります
+33は9049番目にあります
+33は9376番目にあります
+33は9743番目にあります
+33は9974番目にあります
+
+課題2
+code
+#include <stdio.h>
+#include <stdlib.h>
+
+// ノードを表す構造体
+typedef struct _Node {
+  int data;
+  struct _Node *next;
+} Node;
+
+Node *gen_node(void);
+
+/*-- 要素数nの配列aからkeyと一致する要素を線形探索 ---*/
+int search( const Node *p, int key, int n )
+{
+  int i = 0;
+  int result = 0;
+
+  while( i <= n ){
+    if( p->data == key){ // keyと一致するノードがある場合
+      result = 1;
+      printf("%dは%d番目にあります\n", key, i+1);
+    }
+    p=p->next; // 次のノードへ
+    i++;
+  }
+  return result;
+}
+
+int main(void)
+{
+  int ky_1, ky_2, count, result, i;
+  FILE *fp;
+  Node *p,*head, *tail;
+
+  // 逆順リストの作成
+  count = 0;
+  fp = fopen("rand10000.csv", "r");
+  head=gen_node();
+  fscanf(fp,"%d",&(head->data));
+  tail=head;
+  while(p=gen_node(),fscanf(fp,"%d",&(p->data))!=EOF){
+    tail->next=p;
+    tail=p;
+    count++;
+  }
+  tail->next=NULL;
+  fclose( fp );
+
+  printf("キー１を入力して下さい");
+  scanf("%d", &ky_1);
+  printf("キー２を入力して下さい");
+  scanf("%d", &ky_2);
+
+  if(ky_1 <= ky_2){
+    for(i=ky_1; i<=ky_2; i++){
+      result = search(head, i, count);
+      if( result == 0 )
+        printf("%dはありません\n", i);
+    }
+  }else if( ky_2 < ky_1){
+    for(i=ky_2; i<=ky_1; i++){
+      result = search(head, i, count);
+      if( result == 0 )
+        printf("%dはありません\n", i);
+    }
+  }
+
+  return 0;
+}
+
+Node *gen_node(void)
+{
+  return (Node *)malloc(sizeof(Node));
+}
+
+実行結果
+yutanoMacBook-Pro:class_06 yuta$ ./test02
+キー１を入力して下さい30
+キー２を入力して下さい32
+30は4121番目にあります
+30は6796番目にあります
+30は8331番目にあります
+30は9541番目にあります
+30は9765番目にあります
+31は566番目にあります
+31は2012番目にあります
+31は2972番目にあります
+31は4827番目にあります
+31は7324番目にあります
+31は7589番目にあります
+31は9156番目にあります
+32は487番目にあります
+32は1255番目にあります
+32は1965番目にあります
+32は2469番目にあります
+32は2565番目にあります
+32は2931番目にあります
+32は6997番目にあります
+32は7207番目にあります
+32は9067番目にあります
+
+課題３
+番兵法を使用しなかった場合は for 文と if 文の処理があるため、データ量Nに対して、２Nの計算量が必要となる。
+番兵方を使用した場合は、for 文だけの処理となるため、計算量をNまで減らすことができる。
+しかし現在の計算機ではよほどデータ量が多くないと効果が出にくいものである。
