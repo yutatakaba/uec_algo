@@ -1,0 +1,185 @@
+学籍番号: 1610396
+氏名: 高場 雄太
+
+演習1
+code
+include <stdio.h>
+#define N 200
+
+double min( int a[], int n )
+{
+  int i;
+  int min;
+
+  min = a[0];
+  for ( i=1; i<n; i++ ){
+    if ( min>=a[i]) {
+      min = a[i];
+    }
+  }
+  return min;
+}
+
+int main(void)
+{
+  int i,  minimum;
+  int a[N];
+
+  for ( i=0; i<N; i++ ){
+    scanf("%d", &a[i]);
+  }
+
+  minimum = min( a, N );
+
+  printf("Min : %d\n", minimum);
+
+  return 0;
+}
+
+output
+yutanoMacBook-Pro:class_02 yuta$ ./test01 <rand10000.csv
+Min : 40
+
+演習2
+code
+#include <stdio.h>
+#include <stdlib.h>
+
+double dist( int a[], int n )
+{
+  int i;
+  double avg = 0.0;
+  double powx = 0.0;
+  double dis;
+
+  for ( i=0; i<n; i++ ){
+    avg = avg + a[i];
+  }
+  avg = avg / n;
+
+  for ( i=0; i<n; i++ ){
+    powx = powx + ( a[i] * a[i] );
+  }
+
+  dis = ( powx / n ) - ( avg * avg );
+  return dis;
+}
+
+int main(void)
+{
+  int n, i, a;
+  int *p;
+  FILE *fp;
+  double dis;
+
+  printf("Elements : ");
+  scanf("%d", &n);
+
+  p = (int *)calloc( n, sizeof(int) );
+
+  if ( p == NULL){
+    printf("Falied");
+  }else{
+      i = 0;
+      fp = fopen("rand10000.csv", "r" );
+      if ( fp == NULL){
+        printf("Not file\n");
+      }else{
+        while( fscanf( fp, "%d" , &a ) == 1 && i < n ){
+          p[i] = a;
+          i++;
+        }
+      }
+    }
+    dis = dist( p, n );
+    free( p );
+    printf("Sample distribution : %f\n", dis );
+
+  return 0;
+
+}
+
+output
+yutanoMacBook-Pro:class_02 yuta$ ./test02
+Elements : 100
+Sample distribution : 96.305600
+
+演習3
+code
+#include <stdio.h>
+#include <math.h>
+
+typedef struct Point2D{
+  double x;
+  double y;
+} Point2D;
+
+typedef struct Triangle{
+  Point2D p1;
+  Point2D p2;
+  Point2D p3;
+} Triangle;
+
+double Distance2D( Point2D a, Point2D b )
+{
+  double sx, sy, dis;
+
+  sx = ( a.x - b.x ) * ( a.x - b.x );
+  sy = ( a.y - b.y ) * ( a.y - b.y );
+  dis = sqrt( sx + sy );
+
+  return dis;
+}
+
+Point2D ScanPoint2D(void)
+{
+  Point2D p;
+  printf("Input 2 values\n");
+  printf("x : ");
+  scanf("%lf", &p.x);
+  printf("y : ");
+  scanf("%lf", &p.y);
+  return p;
+}
+
+double Area( Triangle t )
+{
+  double area, a, b, c, s;
+
+  a = Distance2D( t.p1, t.p2 );
+  b = Distance2D( t.p2, t.p3 );
+  c = Distance2D( t.p3, t.p1 );
+  s = ( a + b + c ) / 2;
+  area = sqrt( s * ( s - a ) * ( s - b ) * ( s - c ) );
+
+  return area;
+}
+
+int main(void)
+{
+  Triangle a;
+  double area;
+
+  a.p1 = ScanPoint2D();
+  a.p2 = ScanPoint2D();
+  a.p3 = ScanPoint2D();
+
+  area = Area( a );
+
+  printf("%f\n", area );
+
+  return 0;
+}
+
+output
+yutanoMacBook-Pro:class_02 yuta$ ./test03
+Input 2 values
+x : 1
+y : 0
+Input 2 values
+x : 0
+y : 0
+Input 2 values
+x : 0
+y : 1
+0.500000
