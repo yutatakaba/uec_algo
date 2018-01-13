@@ -12,6 +12,16 @@ git clone https://github.com/yutatakaba/uec_algo.git
 ```
 git pull origin master
 ```
+# UEC Wireless を使って作業する場合
+以下のコマンドを最初に実行する
+```
+sh proxy_setup.sh
+```
+自身のパソコンローカル環境において、UEC Wireless で作業してたのち、自宅等に戻って自身のWi-Fi で作業する際には
+```
+sh proxy_unset.sh
+```
+を最初に実行する
 
 # ファイル名
 - class_*: 各講義ごとのディレクトリ
@@ -23,3 +33,4 @@ class_09以降は講義中のファイル名に準ずる
 
 # 注意書き
 あくまで参考程度に使うものとし、コピーアンドペーストによる提出レポートの複製はやめてください
+その他わからないことがあれば yuta.t.uni@gmail.com まで連絡してください
