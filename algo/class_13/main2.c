@@ -20,7 +20,7 @@ int main() {
   count = quicksort(a, 0, n-1);
 
   printArrayQS(a, 0, n-1, "sorted");
-  printf("%d\n", count );
+  printf("counter: %d\n", count );
 
   return 0;
 }

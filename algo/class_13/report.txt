@@ -1,0 +1,80 @@
+課題2
+code:
+/*
+*  quick2.c
+*/
+#include <stdio.h>
+#include "array3.h"
+
+int quicksort(Data *a, int l, int r) {
+  int t;    // データを仕分ける基準値
+  int i, j;
+  int mcnt, lcnt, rcnt;
+
+  if (l >= r) return 0;
+  mcnt = 0;
+
+  t=a[r];
+  i=l-1; j=r;
+
+  while (1) {
+    while (a[++i]<t){
+      mcnt += 1;
+    }
+    mcnt += 1;
+    while (a[--j]>t){
+      mcnt += 1;
+    }
+    mcnt += 1;
+    if (i < j)
+      swap(a, i, j);
+    else
+      break;
+  }
+
+  a[r]=a[i];
+  a[i]=t;
+
+  lcnt = quicksort(a, l, i-1);
+  rcnt = quicksort(a, i+1, r);
+
+  return mcnt+lcnt+rcnt;
+}
+
+実行結果:
+yutanoMacBook-Pro:class_13 yuta$ cat data1|./quicksort2
+input data
+a[0]= 0 a[1]=63 a[2]=35 a[3]=52 a[4]= 6 a[5]=58 a[6]=23 a[7]=17 a[8]=41
+sorted
+a[0]= 0 a[1]= 6 a[2]=17 a[3]=23 a[4]=35 a[5]=41 a[6]=52 a[7]=58 a[8]=63
+counter: 27
+
+
+課題3
+処理時間:
+yutanoMacBook-Pro:class_13 yuta$ ./quicksortT 1000
+user time = 0.000041 (sec)
+sys  time = 0.000003 (sec)
+yutanoMacBook-Pro:class_13 yuta$ ./quicksortT 2000
+user time = 0.000118 (sec)
+sys  time = 0.000007 (sec)
+yutanoMacBook-Pro:class_13 yuta$ ./quicksortT 5000
+user time = 0.000322 (sec)
+sys  time = 0.000014 (sec)
+yutanoMacBook-Pro:class_13 yuta$ ./quicksortT 10000
+user time = 0.000648 (sec)
+sys  time = 0.000023 (sec)
+yutanoMacBook-Pro:class_13 yuta$ ./quicksortT 20000
+user time = 0.001565 (sec)
+sys  time = 0.000082 (sec)
+yutanoMacBook-Pro:class_13 yuta$ ./quicksortT 50000
+user time = 0.004229 (sec)
+sys  time = 0.000187 (sec)
+yutanoMacBook-Pro:class_13 yuta$ ./quicksortT 100000
+user time = 0.009164 (sec)
+sys  time = 0.000324 (sec)
+
+考察:
+他のソート方法と比較して、計算時間は格段に少なくなっていた。
+これは、クイックソートが他の方法に比べて、比較回数が少ないことが原因であると考える。
+また、グラフは、別紙に掲載するものとする。

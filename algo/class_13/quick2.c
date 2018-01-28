@@ -17,16 +17,13 @@ int quicksort(Data *a, int l, int r) {
 
   while (1) {
     while (a[++i]<t){
-      mcnt += i;
+      mcnt += 1;
     }
     mcnt += 1;
-    // printf("%d\n", mcnt );
     while (a[--j]>t){
-      mcnt += j;
+      mcnt += 1;
     }
     mcnt += 1;
-    // printf("%d\n", mcnt );
-    // printArrayQS(a, 0, 8, "sorting");
     if (i < j)
       swap(a, i, j);
     else
