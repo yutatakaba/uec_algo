@@ -1,0 +1,141 @@
+課題1
+code:
+#include <stdio.h>
+
+int main(void)
+{
+  char c = 'A';
+
+  for (c=66; c<=90; c=c+2){
+    printf("%c\n",c);
+  }
+  return 0;
+}
+
+実行結果:
+yutanoMacBook-Pro:class_14 yuta$ ./test01
+B
+D
+F
+H
+J
+L
+N
+P
+R
+T
+V
+X
+Z
+
+課題2
+実行結果:
+[1] char.c
+yutanoMacBook-Pro:class_14 yuta$ ./char
+B
+C
+?
+
+[2-1] starray2.c
+yutanoMacBook-Pro:class_14 yuta$ ./starray2
+文字列 st には"ABCD"が格納されています．
+
+[2-2] starray1.c
+yutanoMacBook-Pro:class_14 yuta$v./starray1
+文字列 st には"ABCD"が格納されています．
+
+[3] swap.c
+yutanoMacBook-Pro:class_14 yuta$ ./swap
+ポインタ s1 は"ABCD"を指しています．
+ポインタ s2 は"1234"を指しています．
+ポインタ s1 は"1234"を指しています．
+ポインタ s2 は"ABCD"を指しています．
+
+swap_ptr の説明:
+void swap_ptr(char **x, char **y)
+{
+  char *tmp = *x; -> (1)
+  *x = *y; -> (2)
+  *y = tmp; ->(3)
+}
+(1)の部分で、一つ目の文字列ポインタを、関数内の新たに定義した文字列ポインタに避難させる。
+(2)の部分で、二つ目の文字列ポインタを、一つ目の文字列ポインタに代入する。
+(3)の部分で、(1)で避難していた一つ目の文字列ポインタを、二つ目の文字列ポインタに代入する。
+
+課題3
+1 スキップテーブル:
+a : 4
+p : 2
+p : 2
+l : 1
+e : 5
+
+2 図示
+別紙に記載する
+
+3 プログラムの作成と実行
+code:
+#include <stdio.h>
+#include <string.h>
+#include <limits.h>
+
+int bm_match(const char txt[], const char pat[])
+{
+  int pt; // txtをなぞるカーソル
+  int pp; // patをなぞるカーソル
+  int txt_len = strlen(txt); // txtの文字数
+  int pat_len = strlen(pat); // patの文字数
+  int skip[UCHAR_MAX+1]; // スキップテーブル
+
+  // スキップテーブルの作成
+  for (pt=0; pt<=UCHAR_MAX; pt++)
+    skip[pt] = pat_len;
+  for (pt=0; pt<pat_len-1; pt++)
+    skip[pat[pt]] = pat_len - pt - 1;
+
+  // スキップテーブルの表示
+  for (pt=0; pt<pat_len; pt++)
+    printf("%c : %d\n",pat[pt],skip[pat[pt]]);
+
+  while (pt < txt_len){
+    pp = pat_len-1;
+    while (txt[pt] == pat[pp]){
+      if (pp == 0) return pt; // 検索成功
+      pp--; pt--;
+    }
+    // スキップテーブルに従って，テキストカーソルを移動
+    // ただし，移動量が少なくてテキストが右にずれない場合は，パターンを１つ右に移動
+    pt += (skip[txt[pt]] > pat_len - pp) ? skip[txt[pt]] : pat_len - pp;
+  }
+  return -1;
+}
+
+int main(void)
+{
+  int index;
+  char text[256];
+  char pattern[256];
+
+  printf("text : "); scanf("%s",text);
+  printf("pattern : "); scanf("%s",pattern);
+
+  index = bm_match(text,pattern);
+  if (index == -1){
+    printf("パターンはテキスト中に存在しません．\n");
+  } else {
+    printf("パターンはテキストの%d文字目からマッチします．\n",index+1);
+  }
+
+  return 0;
+}
+
+実行結果:
+yutanoMacBook-Pro:class_14 yuta$ ./bm
+text : penpineappleapplepen
+pattern : apple
+a : 4
+p : 2
+p : 2
+l : 1
+e : 5
+パターンはテキストの8文字目からマッチします．
