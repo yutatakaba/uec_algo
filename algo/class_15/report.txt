@@ -1,0 +1,253 @@
+学籍番号: 1610396
+氏名: 高場 雄太
+
+演習1
+code:
+#	include <stdio.h>
+#	include "clock.h"
+
+#	define	N	512
+#	define	itr	50
+int main(void){
+  double	a[N][N];
+  double	b[N][N];
+  double	c[N][N];
+  int	i,j,k,l;
+  startClock();
+  for(l=0 ;	l	<	itr	;	l++){
+    for (i=0;	i<N;	i++){
+      for (j=0;	j<N;	j++){
+        for (k=0;	k<N;	k++){
+          c[i][j] +=	a[i][k] *b[k][j];
+        }
+      }
+    }
+  }
+  stopClock();
+  printClock();
+  return 0;
+}
+
+実行結果:
+yutanoMacBook-Pro:class_15 yuta$ ./mad_01
+user time = 30.203937 (sec)
+sys  time = 0.054408 (sec)
+
+code:
+#	include <stdio.h>
+#	include "clock.h"
+
+#	define	N	512
+#	define	itr	50
+int main(void){
+  double	a[N][N];
+  double	b[N][N];
+  double	c[N][N];
+  int	i,j,k,l;
+  startClock();
+  for(l=0 ;	l	<	itr	;	l++){
+    for (i=0;	i<N;	i++){
+      for (k=0;	k<N;	k++){
+        for (j=0;	j<N;	j++){
+          c[i][j] +=	a[i][k] *b[k][j];
+        }
+      }
+    }
+  }
+  stopClock();
+  printClock();
+  return 0;
+}
+
+実行結果:
+yutanoMacBook-Pro:class_15 yuta$ ./mad_02
+user time = 17.389904 (sec)
+sys  time = 0.070673 (sec)
+
+code:
+#	include <stdio.h>
+#	include "clock.h"
+
+#	define	N	512
+#	define	itr	50
+int main(void){
+  double	a[N][N];
+  double	b[N][N];
+  double	c[N][N];
+  int	i,j,k,l;
+  startClock();
+  for(l=0 ;	l	<	itr	;	l++){
+    for (k=0;	k<N;	k++){
+      for (i=0;	i<N;	i++){
+        for (j=0;	j<N;	j++){
+          c[i][j] +=	a[i][k] *b[k][j];
+        }
+      }
+    }
+  }
+  stopClock();
+  printClock();
+  return 0;
+}
+
+実行結果:
+yutanoMacBook-Pro:class_15 yuta$ ./mad_03
+user time = 17.999865 (sec)
+sys  time = 0.109610 (sec)
+
+code:
+#	include <stdio.h>
+#	include "clock.h"
+
+#	define	N	512
+#	define	itr	50
+int main(void){
+  double	a[N][N];
+  double	b[N][N];
+  double	c[N][N];
+  int	i,j,k,l;
+  startClock();
+  for(l=0 ;	l	<	itr	;	l++){
+    for (k=0;	k<N;	k++){
+      for (j=0;	j<N;	j++){
+        for (i=0;	i<N;	i++){
+          c[i][j] +=	a[i][k] *b[k][j];
+        }
+      }
+    }
+  }
+  stopClock();
+  printClock();
+  return 0;
+}
+
+実行結果:
+yutanoMacBook-Pro:class_15 yuta$ ./mad_04
+user time = 128.487758 (sec)
+sys  time = 1.090233 (sec)
+
+code:
+#	include <stdio.h>
+#	include "clock.h"
+
+#	define	N	512
+#	define	itr	50
+int main(void){
+  double	a[N][N];
+  double	b[N][N];
+  double	c[N][N];
+  int	i,j,k,l;
+  startClock();
+  for(l=0 ;	l	<	itr	;	l++){
+    for (j=0;	j<N;	j++){
+      for (k=0;	k<N;	k++){
+        for (i=0;	i<N;	i++){
+          c[i][j] +=	a[i][k] *b[k][j];
+        }
+      }
+    }
+  }
+  stopClock();
+  printClock();
+  return 0;
+}
+
+実行結果:
+yutanoMacBook-Pro:class_15 yuta$ ./mad_05
+user time = 105.548049 (sec)
+sys  time = 0.713850 (sec)
+
+code:
+#	include <stdio.h>
+#	include "clock.h"
+
+#	define	N	512
+#	define	itr	50
+int main(void){
+  double	a[N][N];
+  double	b[N][N];
+  double	c[N][N];
+  int	i,j,k,l;
+  startClock();
+  for(l=0 ;	l	<	itr	;	l++){
+    for (j=0;	j<N;	j++){
+      for (i=0;	i<N;	i++){
+        for (k=0;	k<N;	k++){
+          c[i][j] +=	a[i][k] *b[k][j];
+        }
+      }
+    }
+  }
+  stopClock();
+  printClock();
+  return 0;
+}
+
+実行結果:
+yutanoMacBook-Pro:class_15 yuta$ ./mad_06
+user time = 34.971352 (sec)
+sys  time = 0.335336 (sec)
+
+考察:
+ikjのループが最も早く計算されるのはC言語では行方向にメモリが連続なので行方向の連続性を保持できる方法が最も効率のよい
+方法であると考えられるからである。
+
+演習2
+code:
+#	include <stdio.h>
+#	include "clock.h"
+
+#	define	N	2048
+double	a[N][N];
+double	b[N][N];
+double	c[N][N];
+int main(void){
+  int	i,j,k;
+  startClock();
+  for (i=0;	i<N;	i++){
+    for (k=0;	k<N;	k++){
+      for (j=0;	j<N;	j++){
+        c[i][j]+=a[i][k]*b[k][j];
+      }
+    }
+  }
+  stopClock();
+  printClock();
+  return 0;
+}
+
+実行結果:
+yutanoMacBook-Pro:class_15 yuta$ ./mad_07
+user time = 22.787083 (sec)
+sys  time = 0.199523 (sec)
+
+code:
+#	include <stdio.h>
+#	include "clock.h"
+
+#	define	N	2050
+double	a[N][N];
+double	b[N][N];
+double	c[N][N];
+int main(void){
+  int	i,j,k;
+  startClock();
+  for (i=0;	i<N-2;	i++){
+    for (k=0;	k<N-2;	k++){
+      for (j=0;	j<N-2;	j++){
+        c[i][j]+=a[i][k]*b[k][j];
+      }
+    }
+  }
+  stopClock();
+  printClock();
+  return 0;
+}
+
+実行結果:
+yutanoMacBook-Pro:class_15 yuta$ ./mad_08
+user time = 22.419666 (sec)
+sys  time = 0.136933 (sec)
+
+演習3
+わかりません
