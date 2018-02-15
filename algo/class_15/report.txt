@@ -5,7 +5,6 @@
 code:
 #	include <stdio.h>
 #	include "clock.h"
-
 #	define	N	512
 #	define	itr	50
 int main(void){
@@ -36,7 +35,6 @@ sys  time = 0.054408 (sec)
 code:
 #	include <stdio.h>
 #	include "clock.h"
-
 #	define	N	512
 #	define	itr	50
 int main(void){
@@ -67,7 +65,6 @@ sys  time = 0.070673 (sec)
 code:
 #	include <stdio.h>
 #	include "clock.h"
-
 #	define	N	512
 #	define	itr	50
 int main(void){
@@ -98,7 +95,6 @@ sys  time = 0.109610 (sec)
 code:
 #	include <stdio.h>
 #	include "clock.h"
-
 #	define	N	512
 #	define	itr	50
 int main(void){
@@ -129,7 +125,6 @@ sys  time = 1.090233 (sec)
 code:
 #	include <stdio.h>
 #	include "clock.h"
-
 #	define	N	512
 #	define	itr	50
 int main(void){
@@ -160,7 +155,6 @@ sys  time = 0.713850 (sec)
 code:
 #	include <stdio.h>
 #	include "clock.h"
-
 #	define	N	512
 #	define	itr	50
 int main(void){
@@ -196,7 +190,6 @@ ikjのループが最も早く計算されるのはC言語では行方向にメ�
 code:
 #	include <stdio.h>
 #	include "clock.h"
-
 #	define	N	2048
 double	a[N][N];
 double	b[N][N];
@@ -224,7 +217,6 @@ sys  time = 0.199523 (sec)
 code:
 #	include <stdio.h>
 #	include "clock.h"
-
 #	define	N	2050
 double	a[N][N];
 double	b[N][N];
@@ -250,4 +242,37 @@ user time = 22.419666 (sec)
 sys  time = 0.136933 (sec)
 
 演習3
-わかりません
+code:
+#	include <stdio.h>
+#	include "clock.h"
+#	define	N	4096
+#	define	M	4100
+#	define	BLOCK	256
+double	a[M][M];
+double	b[M][M];
+double	c[M][M];
+int main(void){
+  int	i,j,k,ii,jj,kk;
+  startClock();
+  for (i	= 0;	i	<N;	i+=BLOCK){
+    for(j	= 0;	j	<	N;	j+=BLOCK){
+      for(k	= 0;	k	<	N;	k+=BLOCK){
+        for(ii	=	i;	ii	< (i	+	BLOCK);	ii++){
+          for (kk	=	k;	kk	< (k	+	BLOCK);	kk++){
+            for (jj	=	j;	jj	< (j	+	BLOCK);	jj++){
+              c[ii][jj]+=a[ii][kk]*b[kk][jj];
+            }
+          }
+        }
+      }
+    }
+  }
+  stopClock();
+  printClock();
+  return 0;
+}
+
+実行結果:
+yutanoMacBook-Pro:class_15 yuta$ ./mad_10
+user time = 185.659892 (sec)
+sys  time = 1.464207 (sec)
